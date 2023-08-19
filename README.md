@@ -1,4 +1,4 @@
-# Meta
+# Metaverse project
 
 Wonjun Lee
 
