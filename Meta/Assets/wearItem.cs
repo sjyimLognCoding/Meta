@@ -3,22 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LikeButtonActivator : MonoBehaviour
+public class wearItem : MonoBehaviour
 {
-    //public UnityEvent clickObject = new UnityEvent();
-    public GameObject likeActivator;
-    public GameObject Buttons;
-
-    private void Start()
-    {
-
-        likeActivator = this.gameObject;
-        Buttons.SetActive(false);
-    }
-
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -28,14 +17,11 @@ public class LikeButtonActivator : MonoBehaviour
                 if (hit.transform.CompareTag("Item"))
                 {
                     Item hitItem = hit.transform.GetComponent<Item>();
-                    hitItem.ShowLikeButton(Buttons);
+                    hitItem.AttachOnAvatar();
                 }
-            }
-            else
-            {
-                if (Buttons.activeInHierarchy)
+                else if (hit.transform.CompareTag("AttachedItem"))
                 {
-                    Buttons.SetActive(false);
+                    //return to original displayed position
                 }
             }
         }

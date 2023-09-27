@@ -12,6 +12,8 @@ public class AvatarMotion : MonoBehaviour
     public Vector3 currentPosition;
     public Vector3 lastPosition;
 
+    public GameObject[] avatarClothing;
+
     private void Update()
     {
 
@@ -62,6 +64,12 @@ public class AvatarMotion : MonoBehaviour
             animator.SetBool("isRunning", false);
             animator.SetBool("isWalking", false);
         }
+
+
+        avatarClothing = GameObject.FindGameObjectsWithTag("AttachedItem");
+        //avatarClothing.transform.position = currentPosition;
+
+
     }
 
     private void LateUpdate()
