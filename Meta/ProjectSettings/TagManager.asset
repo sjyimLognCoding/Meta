@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - InteractableObject
-  - Ground
+  - Item
+  - Floor
   layers:
   - Default
   - TransparentFX
