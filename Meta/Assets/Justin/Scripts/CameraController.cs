@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
 
     Camera mainCam;
 
-    [SerializeField] TextMeshProUGUI itemNoteText;
     [SerializeField] TMP_InputField itemNoteEditField;
     [SerializeField] Button closeNoteButton;
     [SerializeField] TextMeshProUGUI itemTypeText;
