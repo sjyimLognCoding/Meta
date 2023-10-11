@@ -21,7 +21,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (instance != null)
         {
-            // Destory(this);
+            Destory(this);
         }
         instance = this;
     }
