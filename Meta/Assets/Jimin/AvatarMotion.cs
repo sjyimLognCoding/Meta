@@ -16,7 +16,6 @@ public class AvatarMotion : MonoBehaviour
 
     private void Update()
     {
-
         float xDirection = Input.GetAxis("Horizontal");
         float zDirection = Input.GetAxis("Vertical");
 
@@ -30,7 +29,6 @@ public class AvatarMotion : MonoBehaviour
         Vector3 rightRelative = xDirection * camRight;
 
         Vector3 relativeMoveDir = forwardRelative + rightRelative;
-
 
         Vector3 moveDirection = new Vector3(relativeMoveDir.x, 0.0f, relativeMoveDir.z);
 
@@ -55,7 +53,7 @@ public class AvatarMotion : MonoBehaviour
 
         transform.position += myTurnedInputs;
 
-        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y,0);
+        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y, 0);
 
         currentPosition = transform.position;
 

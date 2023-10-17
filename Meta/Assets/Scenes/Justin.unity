@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 183112813}
   - component: {fileID: 183112812}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: ItemPriceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 577389067}
   - component: {fileID: 577389066}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: NoteInputField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -705,8 +705,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1281701662}
+  - component: {fileID: 1281701663}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: ObjectInteractionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -727,6 +728,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1281701663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281701661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea96d13079e6124bb360be22091d5c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemNoteEditField: {fileID: 577389066}
+  closeNoteButton: {fileID: 1329018881}
+  itemTypeText: {fileID: 1503390706}
+  itemPriceText: {fileID: 183112812}
 --- !u!1 &1329018879
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +757,7 @@ GameObject:
   - component: {fileID: 1329018882}
   - component: {fileID: 1329018881}
   m_Layer: 5
-  m_Name: Button
+  m_Name: NoteCloseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -811,8 +828,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1433051160}
-        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+      - m_Target: {fileID: 1281701663}
+        m_TargetAssemblyTypeName: ObjectInteractionManager, Assembly-CSharp
         m_MethodName: CloseNote
         m_Mode: 1
         m_Arguments:
@@ -999,8 +1016,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433051156}
-  m_LocalRotation: {x: -0.27277976, y: 0.013562555, z: -0.003846321, w: -0.96197325}
-  m_LocalPosition: {x: -1.7151234, y: 4.528267, z: -8.391494}
+  m_LocalRotation: {x: -0.25399446, y: 0.0034798377, z: -0.000914217, w: -0.967199}
+  m_LocalPosition: {x: -0.94753313, y: 3.2820392, z: -6.3187885}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1019,10 +1036,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c700a540a90387744b2930957e1c30c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNoteEditField: {fileID: 577389066}
-  closeNoteButton: {fileID: 1329018881}
-  itemTypeText: {fileID: 1503390706}
-  itemPriceText: {fileID: 183112812}
 --- !u!1 &1471772784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1183,7 @@ GameObject:
   - component: {fileID: 1503390707}
   - component: {fileID: 1503390706}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ItemTypeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1306,7 +1319,7 @@ GameObject:
   - component: {fileID: 1614289651}
   - component: {fileID: 1614289650}
   - component: {fileID: 1614289654}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -1656,7 +1669,7 @@ GameObject:
   - component: {fileID: 2058328997}
   - component: {fileID: 2058328996}
   - component: {fileID: 2058328995}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -1831,7 +1844,7 @@ GameObject:
   - component: {fileID: 2141672469}
   - component: {fileID: 2141672468}
   - component: {fileID: 2141672472}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Item
   m_Icon: {fileID: 0}

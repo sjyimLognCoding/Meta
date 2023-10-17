@@ -16,7 +16,6 @@ public class ObjectInteractionManager : MonoBehaviour
 
     Transform hitTransform;
 
-
     float touchTime = 0f;
     float touchThreshold = 0.3f;
     Transform selectedObject;
@@ -41,8 +40,20 @@ public class ObjectInteractionManager : MonoBehaviour
     }
 
 
+    Vector3 positionOffset;
+
+
+
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (selectedObject != null)
+            {
+                positionOffset = selectedObject.position - GetMouseWorldPos(selectedObject);
+            }
+        }
+
         if (Input.GetMouseButton(0))
         {
             touchTime += Time.deltaTime;
@@ -57,25 +68,16 @@ public class ObjectInteractionManager : MonoBehaviour
                     if (hit_selectObject.transform.CompareTag("Item"))
                     {
                         ChangeSelectedObject(hit_selectObject.transform);
+                        positionOffset = selectedObject.position - GetMouseWorldPos(selectedObject);
                         changeObjectFlag = true;
                     }
                 }
             }
 
-            if (selectedObject != null && Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit_floor, maxDistance: Mathf.Infinity, layerMask: 1 << floorLayerNumber))
-            {
-                // selectedObject.position = hit_floor.point + selectedObject.position;
-                selectedObject.position = hit_floor.point + objectPositionOffset;
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
             if (selectedObject != null)
             {
-                objectPositionOffset = new Vector3(selectedObject.position.x,
-                selectedObject.GetComponent<Collider>().bounds.center.y + selectedObject.GetComponent<Collider>().bounds.size.y / 2f,
-                selectedObject.position.z);
+                Vector3 translate = GetMouseWorldPos(selectedObject) + positionOffset;
+                selectedObject.position = new Vector3(translate.x, selectedObject.position.y, translate.z);
             }
         }
 
@@ -130,7 +132,15 @@ public class ObjectInteractionManager : MonoBehaviour
         itemPriceText.gameObject.SetActive(false);
     }
 
-    public void ChangeSelectedObject(Transform go)
+    private Vector3 GetMouseWorldPos(Transform t)
+    {
+        Vector3 pos = Input.mousePosition;
+        pos.z = mainCam.WorldToScreenPoint(t.position).z;
+
+        return mainCam.ScreenToWorldPoint(pos);
+    }
+
+    private void ChangeSelectedObject(Transform go)
     {
         if (selectedObject != null && (selectedObject == go || !selectedObject.CompareTag("Item"))) return;
 
