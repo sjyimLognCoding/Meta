@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.Video;
 
 public class ObjectInteractionManager : MonoBehaviour
 {
@@ -146,4 +148,19 @@ public class ObjectInteractionManager : MonoBehaviour
 
         selectedObject = go;
     }
+
+
+    private bool IsPointerOverUI(Touch touch)
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+
+        eventData.position = new Vector2(touch.position.x, touch.position.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        if (!EventSystem.current) return false;
+        EventSystem.current.RaycastAll(eventData, results);
+        return results.Count > 0;
+    }
+
+
 }

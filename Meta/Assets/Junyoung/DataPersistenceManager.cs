@@ -63,6 +63,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
+        // this.dataHandler = new FileDataHandler(Application.dataPath, fileName);
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadData();
@@ -71,7 +72,6 @@ public class DataPersistenceManager : MonoBehaviour
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
-
 
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
