@@ -38,11 +38,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     private Canvas canvas;
     private Camera cam;
 
-    public bool JoystickEnabled
-    {
-        get;
-        private set;
-    }
+
 
     private Vector2 input = Vector2.zero;
 
@@ -68,6 +64,11 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         OnDrag(eventData);
     }
 
+    public bool JoystickEnabled
+    {
+        get;
+        private set;
+    }
     public void OnDrag(PointerEventData eventData)
     {
         cam = null;
@@ -83,7 +84,12 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         HandleInput(input.magnitude, input.normalized, radius, cam);
         handle.anchoredPosition = input * radius * handleRange;
     }
-
+    public virtual void OnPointerUp(PointerEventData eventData)
+    {
+        input = Vector2.zero;
+        handle.anchoredPosition = Vector2.zero;
+        JoystickEnabled = false;
+    }
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
         if (magnitude > deadZone)
@@ -137,12 +143,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         return 0;
     }
 
-    public virtual void OnPointerUp(PointerEventData eventData)
-    {
-        input = Vector2.zero;
-        handle.anchoredPosition = Vector2.zero;
-        JoystickEnabled = false;
-    }
+
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
     {
