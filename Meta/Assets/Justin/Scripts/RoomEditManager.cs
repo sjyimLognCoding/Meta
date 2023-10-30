@@ -47,7 +47,10 @@ public class RoomEditManager : MonoBehaviour
 
     public void CreateObject(string objectType)
     {
-        Instantiate(ObjectDictionary[objectType], new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)), Quaternion.identity);
+        GameObject go = Instantiate(ObjectDictionary[objectType], new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)), Quaternion.identity);
+        GameObjectData goData = go.GetComponent<GameObjectData>();
+        goData.note.ItemType = objectType;
+        goData.note.Price = objCost[objectType];
     }
 
     public void SetBudget(string user_input)

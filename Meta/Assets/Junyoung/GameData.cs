@@ -7,6 +7,7 @@ public class GameData
     public string objType;
     public Vector3 position;
     public Quaternion rotation;
+    public Note note;
 
     public GameData()
     {
