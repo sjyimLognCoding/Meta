@@ -19,10 +19,13 @@ public class CreateOrJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(joinField.text);
     }
 
+    // the above two methods will connect your photon profile to photon "room" not the unity scene
+
 
     public override void OnJoinedRoom()
     {
         // 
         PhotonNetwork.LoadLevel("PhotonScene");
+        // network object : PhotonView component
     }
 }
