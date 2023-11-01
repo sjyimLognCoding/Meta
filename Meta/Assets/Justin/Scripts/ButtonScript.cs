@@ -6,21 +6,22 @@ using UnityEngine.EventSystems;
 
 public class ButtonScript : MonoBehaviour
 {
-    public void ButtonClick() 
+    public void ButtonClick()
     {
         string clickObject = EventSystem.current.currentSelectedGameObject.name;
 
-        if (clickObject == "Button_Square") 
+        if (clickObject == "Button_Square")
         {
             GameObject a = GameObject.FindGameObjectWithTag("Cube");
             GameObject b = Instantiate(a);
             b.transform.Translate(new Vector3(79, 268, -92));
-
         }
-        if (clickObject == "Button_Circle") 
+
+
+        if (clickObject == "Button_Circle")
         {
             GameObject a = GameObject.FindGameObjectWithTag("Cylinder");
-            
+
 
         }
     }

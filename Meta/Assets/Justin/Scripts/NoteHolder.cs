@@ -10,8 +10,6 @@ public struct Note
 }
 
 
-
-
 public class NoteHolder : MonoBehaviour
 {
     public Note myNote;

@@ -64,7 +64,6 @@ public class FileDataHandler
                     writer.Write(dataToStore);
                 }
             }
-
         }
 
         catch (System.Exception e)

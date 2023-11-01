@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameData : MonoBehaviour
+public class GameData
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string objType;
+    public Vector3 position;
+    public Quaternion rotation;
+    public Note note;
 
-    // Update is called once per frame
-    void Update()
+    public GameData()
     {
-        
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
     }
 }
