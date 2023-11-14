@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class GameData
 {
-    public string objType;
-    public Vector3 position;
-    public Quaternion rotation;
-    public Note note;
+    public SerialisableDictionary<string, ItemData> dataDictionary;
 
     public GameData()
     {
-        position = Vector3.zero;
-        rotation = Quaternion.identity;
+        dataDictionary = new SerialisableDictionary<string, ItemData>();
     }
+
 }

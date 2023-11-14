@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-using UnityEngine.Video;
 
 public class ObjectInteractionManager : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class ObjectInteractionManager : MonoBehaviour
     Transform hitTransform;
 
     float touchTime = 0f;
-    float touchThreshold = 0.3f;
+    float touchTimeThreshold = 0.3f;
     Transform selectedObject;
     RaycastHit hit_selectObject;
     RaycastHit hit_floor;
@@ -28,11 +27,9 @@ public class ObjectInteractionManager : MonoBehaviour
     int floorLayerNumber = 7;
     Vector3 objectPositionOffset;
 
-    Vector3 initialClickPoint;
-    Vector3 mouseInitialPosition;
-
-    float mousePositionDelta;
-    float mousePositionThreshold = 10f;
+    Vector2 touchPrevPosition;
+    float positionDelta;
+    float positionThreshold = 10f;
 
     bool changeObjectFlag = false;
 
@@ -44,94 +41,122 @@ public class ObjectInteractionManager : MonoBehaviour
 
     Vector3 positionOffset;
 
-
+    Vector2 initialPosition;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.touchCount == 1)
         {
-            if (selectedObject != null)
+            Touch touch = Input.touches[0];
+
+            if (touch.phase == TouchPhase.Began)
             {
-                positionOffset = selectedObject.position - GetMouseWorldPos(selectedObject);
-            }
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            touchTime += Time.deltaTime;
-
-            mouseInitialPosition = Input.mousePosition;
-            mousePositionDelta += (mouseInitialPosition - Input.mousePosition).magnitude;
-
-            if (touchTime > touchThreshold && mousePositionDelta < mousePositionThreshold && !changeObjectFlag)
-            {
-                if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit_selectObject))
+                if (selectedObject != null)
                 {
-                    if (hit_selectObject.transform.CompareTag("Item"))
+                    positionOffset = selectedObject.position - GetMouseWorldPos(selectedObject);
+                }
+                initialPosition = touch.position;
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                if (touchTime < touchTimeThreshold && !changeObjectFlag)
+                {
+                    bool result = Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit_note);
+                    if (result)
                     {
-                        ChangeSelectedObject(hit_selectObject.transform);
-                        positionOffset = selectedObject.position - GetMouseWorldPos(selectedObject);
-                        changeObjectFlag = true;
+                        if (hit_note.transform.CompareTag("Item"))
+                        {
+                            if (!itemNoteEditField.gameObject.activeInHierarchy || !closeNoteButton.gameObject.activeInHierarchy)
+                            {
+                                OpenNote();
+                            }
+
+                            else
+                            {
+                                hitTransform.GetComponent<ItemData>().note = itemNoteEditField.text;
+                            }
+
+                            hitTransform = hit_note.transform;
+                            ItemData data = hitTransform.GetComponent<ItemData>();
+
+                            itemNoteEditField.text = data.note;
+                            itemTypeText.text = data.type;
+                            itemPriceText.text = "$" + data.price.ToString();
+                        }
+                    }
+
+                    if ((selectedObject != null && (initialPosition - touch.position).magnitude < positionThreshold) && (!hit_note.transform.CompareTag("Item") || !result))
+                    {
+                        selectedObject = null;
+                        CloseNote();
+                        return;
                     }
                 }
+
+                touchTime = 0f;
+                positionDelta = 0f;
+                changeObjectFlag = false;
             }
 
-            if (selectedObject != null)
+            else
             {
-                Vector3 translate = GetMouseWorldPos(selectedObject) + positionOffset;
-                selectedObject.position = new Vector3(translate.x, selectedObject.position.y, translate.z);
-            }
-        }
+                RaycastHit tempHit;
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (touchTime < touchThreshold)
-            {
-                if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit_note))
+                if (Physics.Raycast(mainCam.ScreenPointToRay(touch.position), out hit_selectObject) && !changeObjectFlag)
                 {
-                    if (hit_note.transform.CompareTag("Item"))
+                    if (hit_selectObject.transform.tag == "Item")
                     {
-                        //! 노트 UI 활성화
-                        if (!itemNoteEditField.gameObject.activeInHierarchy || !closeNoteButton.gameObject.activeInHierarchy)
-                        {
-                            itemNoteEditField.gameObject.SetActive(true);
-                            closeNoteButton.gameObject.SetActive(true);
-                            itemTypeText.gameObject.SetActive(true);
-                            itemPriceText.gameObject.SetActive(true);
-                        }
+                        touchTime += Time.deltaTime;
+                    }
 
-                        else
-                        {
-                            hitTransform.GetComponent<NoteHolder>().myNote.ThisNote = itemNoteEditField.text;
-                        }
-
-                        hitTransform = hit_note.transform;
-                        NoteHolder hitNoteHolder = hitTransform.GetComponent<NoteHolder>();
-
-                        // todo : retrieve the note info held by the item
-                        // - apply note text to item note field
-                        itemNoteEditField.text = hitNoteHolder.myNote.ThisNote;
-                        itemTypeText.text = hitNoteHolder.myNote.ItemType;
-                        itemPriceText.text = "$" + hitNoteHolder.myNote.Price.ToString();
+                    else
+                    {
+                        touchTime = 0;
                     }
                 }
-            }
 
-            touchTime = 0f;
-            mousePositionDelta = 0f;
-            changeObjectFlag = false;
+                touchPrevPosition = touch.position;
+                positionDelta += (touchPrevPosition - touch.position).magnitude;
+
+
+                if (touchTime > touchTimeThreshold && positionDelta < positionThreshold && !changeObjectFlag)
+                {
+                    if (Physics.Raycast(mainCam.ScreenPointToRay(touch.position), out hit_selectObject))
+                    {
+                        if (hit_selectObject.transform.CompareTag("Item"))
+                        {
+                            ChangeSelectedObject(hit_selectObject.transform);
+                            OpenNote();
+                            positionOffset = selectedObject.position - GetMouseWorldPos(selectedObject);
+                            changeObjectFlag = true;
+                        }
+                    }
+                }
+
+                if (selectedObject != null)
+                {
+                    Vector3 translate = GetMouseWorldPos(selectedObject) + positionOffset;
+                    selectedObject.position = new Vector3(translate.x, selectedObject.position.y, translate.z);
+                }
+            }
         }
     }
 
-
-    public void CloseNote()
+    private void CloseNote()
     {
-        hitTransform.GetComponent<NoteHolder>().myNote.ThisNote = itemNoteEditField.text;
-
         itemNoteEditField.gameObject.SetActive(false);
         closeNoteButton.gameObject.SetActive(false);
         itemTypeText.gameObject.SetActive(false);
         itemPriceText.gameObject.SetActive(false);
+    }
+
+    private void OpenNote()
+    {
+        itemNoteEditField.gameObject.SetActive(true);
+        closeNoteButton.gameObject.SetActive(true);
+        itemTypeText.gameObject.SetActive(true);
+        itemPriceText.gameObject.SetActive(true);
     }
 
     private Vector3 GetMouseWorldPos(Transform t)

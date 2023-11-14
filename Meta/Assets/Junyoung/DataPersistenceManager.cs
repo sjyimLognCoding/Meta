@@ -38,7 +38,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadData()
     {
-        this.gameData = dataHandler.Load();
+        // this.gameData = dataHandler.Load();
 
         if (this.gameData == null)
         {
@@ -63,8 +63,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
-        // this.dataHandler = new FileDataHandler(Application.dataPath, fileName);
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.dataHandler = new FileDataHandler(Application.dataPath, fileName);
+        // this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadData();
     }
