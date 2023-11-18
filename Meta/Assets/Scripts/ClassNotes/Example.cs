@@ -45,12 +45,12 @@ public class Example : MonoBehaviour, IData
 
         foreach (string k in a.Keys)
         {
-            if (data.ForTesting.ContainsKey(k))
+            if (data.dataDictionary.ContainsKey(k))
             {
-                data.ForTesting.Remove(k);
+                data.dataDictionary.Remove(k);
             }
 
-            data.ForTesting.Add(k, a[k]);
+            // data.dataDictionary.Add(k, a[k]);
         }
     }
 
@@ -60,7 +60,7 @@ public class Example : MonoBehaviour, IData
         transform.position = data.position;
         transform.rotation = data.rotation;
 
-        this.a = data.ForTesting;
+        // this.a = data.dataDictionary;
     }
 
     // all the movement logic
