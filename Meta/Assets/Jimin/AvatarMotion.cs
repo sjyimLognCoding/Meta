@@ -66,7 +66,7 @@ public class AvatarMotion : MonoBehaviour
         }
 
 
-        avatarClothing = GameObject.FindGameObjectsWithTag("AttachedItem");
+        //avatarClothing = GameObject.FindGameObjectsWithTag("AttachedItem");
         //avatarClothing.transform.position = currentPosition;
 
 

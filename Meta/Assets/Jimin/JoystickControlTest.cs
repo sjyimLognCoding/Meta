@@ -5,7 +5,8 @@ using UnityEngine;
 public class JoystickControlTest : MonoBehaviour
 {
     [SerializeField] FloatingJoystick joystick;
-    [SerializeField] float move_sensitivity = 0.03f;
+
+    float move_sensitivity = 0.03f;
 
     Vector3 initialRight, initialForward;
 
