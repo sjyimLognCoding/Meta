@@ -40,6 +40,7 @@ MonoBehaviour:
   - TestRPC
   - SetDestinationCoroutine
   - RPCMethod
+  - InteractAvatar
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

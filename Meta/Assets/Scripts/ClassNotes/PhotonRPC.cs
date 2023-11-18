@@ -60,12 +60,6 @@ public class PhotonRPC : MonoBehaviour
     }
 
 
-
-
-
-
-
-
     // Photon Room/player custom properties
     // Dictionary/HashTable format
 
