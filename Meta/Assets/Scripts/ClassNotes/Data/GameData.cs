@@ -6,7 +6,7 @@ public class GameData
     public Vector3 position;
     public Quaternion rotation;
 
-    public SerializableDictionary<string, int> ForTesting;
+    public SerializableDictionary<string, ItemData> dataDictionary;
 
 
     // add whichever data you would like to save here
@@ -17,7 +17,7 @@ public class GameData
         position = Vector3.zero;
         rotation = Quaternion.identity;
 
-        ForTesting = new SerializableDictionary<string, int>();
+        dataDictionary = new SerializableDictionary<string, ItemData>();
 
         // default value if there is no save file to load from
     }
