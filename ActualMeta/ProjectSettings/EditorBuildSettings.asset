@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/RNLoad.unity
+    guid: bc2b03587e7f3744dac31e1ae3d617cf
+  - enabled: 1
+    path: Assets/Scenes/RoomEditScene.unity
+    guid: 41d0aa113cd6445459606a23cc15a6d2
+  - enabled: 1
+    path: Assets/Scenes/AvatarScene.unity
+    guid: 0c0722c0e32127140915699b32979f7a
+  - enabled: 0
+    path: Assets/Scenes/AvatarChangeClothes.unity
+    guid: 6eb084cda02e6d04a9d4c8b377ba7b82
+  - enabled: 0
+    path: Assets/Scenes/PhotonNotion.unity
+    guid: c5df2a58a988adf4b916cf1ec8cefbc4
   m_configObjects: {}

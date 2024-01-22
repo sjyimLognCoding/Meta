@@ -1,32 +1,37 @@
+using System.Text.RegularExpressions;
+using Photon.Pun;
 using UnityEngine;
 
+[RequireComponent(typeof(PhotonView))]
 [System.Serializable]
-[RequireComponent(typeof(Photon.Pun.PhotonView))]
 public class ItemData : MonoBehaviour, IDataPersistence
 {
     //To be attached to every furniture item in the scene
-
-    public string type;
     public Vector3 position;
     public Quaternion rotation;
-    // public Note note;
-    public int price;
-    public string note;
+    public int likeCount;
 
-    public void LoadData(GameData data)
+    private void OnEnable()
     {
+        string pattern = @"\(Clone\)";
 
+        gameObject.name = Regex.Replace(gameObject.name, pattern, "");
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
-        int i = 0;
-        while (true)
+        position = transform.position;
+        rotation = transform.rotation;
+
+        string newKey = gameObject.name + "__" + gameObject.GetComponent<PhotonView>().ViewID;
+        if (!data.dataDictionary.ContainsKey(newKey))
         {
-            if (data.dataDictionary.ContainsKey(type)) i++;
-            else break;
+            data.dataDictionary.Add(newKey, this);
         }
-        string newKey = type + "_" + i;
-        data.dataDictionary.Add(newKey, this);
+        else
+        {
+            data.dataDictionary[newKey] = this;
+        }
+
     }
 }

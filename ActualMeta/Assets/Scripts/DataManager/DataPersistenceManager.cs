@@ -7,10 +7,7 @@ public class DataPersistenceManager : MonoBehaviour
 {
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
-
-
-    [SerializeField] string fileName;
-    private FileDataHandler dataHandler;
+    private CloudJsonHandler dataHandler;
 
     public static DataPersistenceManager instance
     {
@@ -30,7 +27,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         foreach (IDataPersistence dataObject in dataPersistenceObjects)
         {
-            dataObject.SaveData(ref gameData);
+            dataObject.SaveData(gameData);
         }
 
         dataHandler.Save(gameData);
@@ -47,7 +44,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         foreach (IDataPersistence dataObject in dataPersistenceObjects)
         {
-            dataObject.LoadData(gameData);
+            // dataObject.LoadData(gameData);
         }
     }
 
@@ -63,8 +60,6 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
-        this.dataHandler = new FileDataHandler(Application.dataPath, fileName);
-        // this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadData();
     }

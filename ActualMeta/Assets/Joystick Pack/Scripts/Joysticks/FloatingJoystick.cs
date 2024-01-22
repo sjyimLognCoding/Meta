@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,10 +12,13 @@ public class FloatingJoystick : Joystick
         background.gameObject.SetActive(false);
     }
 
+    public event Action PointerDownEvent;
+
     public override void OnPointerDown(PointerEventData eventData)
     {
         background.anchoredPosition = ScreenPointToAnchoredPosition(eventData.position);
         background.gameObject.SetActive(true);
+        PointerDownEvent.Invoke();
         base.OnPointerDown(eventData);
     }
 
